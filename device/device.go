@@ -381,12 +381,12 @@ func (device *Device) Close() {
 	device.BindClose()
 
 	device.isUp.Set(false)
-
+	
 	close(device.signals.stop)
-
-	device.RemoveAllPeers()
-
 	device.state.stopping.Wait()
+	
+	device.RemoveAllPeers()
+	
 	device.FlushPacketQueues()
 
 	device.rate.limiter.Close()
